@@ -5,5 +5,4 @@ module "compute_instance" {
   zone          = var.zone
   boot_disk     = var.boot_disk
   tags          = var.tags
-
 }
