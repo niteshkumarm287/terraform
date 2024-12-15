@@ -6,3 +6,10 @@ module "compute_instance" {
   boot_disk     = var.boot_disk
   tags          = var.tags
 }
+
+module "google_service_account" {
+  source = "./modules/service-account"
+  account_id = var.account_id
+  display_name = var.display_name
+
+}
