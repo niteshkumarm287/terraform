@@ -1,8 +1,3 @@
-# variable "instance_name" {
-#   description = "Name of the compute instance"
-#   type        = string
-# }
-
 variable "machine_type" {
   description = "Machine type for the instance"
   type        = string
@@ -27,4 +22,10 @@ variable "tags" {
 variable "instance-name" {
   description = "instance name for the instance"
   type        = string
+}
+
+variable "instance_count" {
+  description = "Number of instances to create"
+  type        = number
+  default     = 1  # Default value, can be overridden via tfvars
 }

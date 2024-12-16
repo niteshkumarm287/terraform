@@ -148,3 +148,8 @@ variable "cit_network" {
   
 }
 
+variable "instance_count" {
+  description = "Number of instances to create"
+  type        = number
+  default     = 1  # Default value, can be overridden via tfvars
+}
