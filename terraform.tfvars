@@ -12,9 +12,9 @@ display_name = "tf-sa-prod"
 # gke cluster variables
 
 name = "gke-prod-1"
-location = "us-central-1"
+location = "us-central1"
 remove_default_node_pool = true
-initial_node_count = 2
+initial_node_count = 1
 
 
 # instance template
