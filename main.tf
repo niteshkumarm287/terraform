@@ -13,3 +13,12 @@ module "google_service_account" {
   display_name = var.display_name
 
 }
+
+module "google_container_cluster" {
+    source = "./modules/gke-cluster"
+    name = var.name
+    location = var.location
+    remove_default_node_pool = var.remove_default_node_pool
+    initial_node_count = var.initial_node_count
+  
+}
