@@ -1,4 +1,4 @@
-name: Set up Google Cloud Credentials
+name: GCP Setup with Service Account
 
 on:
   push:
@@ -10,18 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Google Cloud credentials
-      - name: Set up Google Cloud credentials
-        uses: google-github-actions/setup-gcloud@v3
-        with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          credentials: ${{ secrets.GCP_SA_KEY }}
-
-      # Additional steps to use Google Cloud tools (e.g., gcloud commands) can be added here
-      - name: Test GCloud Setup
-        run: |
-          gcloud info
+      # Step 2: Set up 
