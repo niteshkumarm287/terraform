@@ -36,6 +36,6 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
-      # Step 6: Terraform Plan 
+      # Step 6: Terraform Plan
       - name: Terraform Plan
         run: terraform plan -var-file="terraform.tfvars"
