@@ -39,6 +39,7 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
+
       # Step 6: Terraform Apply (only for main branch)
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
