@@ -1,12 +1,12 @@
-name: Terraform Plan and Apply
+name: Terraform Plan and Apply on PR Approval
 
 on:
-  push:
-    branches:
-      - main
+  pull_request_review:
+    types: [submitted]
 
 jobs:
   terraform:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
 
     permissions:
@@ -39,8 +39,6 @@ jobs:
       - name: Terraform Plan
         run: terraform plan -out=tfplan
 
-
-      # Step 6: Terraform Apply (only for main branch)
+      # Step 6: Terraform Apply
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve tfplan
