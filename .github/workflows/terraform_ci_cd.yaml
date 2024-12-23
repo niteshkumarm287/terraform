@@ -1,12 +1,12 @@
-name: Terraform Plan and Apply on PR Approval
+name: Terraform GCP Setup
 
 on:
-  pull_request_review:
-    types: [submitted]
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
 
 jobs:
   terraform:
-    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
 
     permissions:
@@ -14,31 +14,27 @@ jobs:
       contents: read
 
     steps:
-      # Step 1: Checkout Repository
+      # Step 1: Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Authenticate to Google Cloud
-      - name: Authenticate to Google Cloud
+      # Step 2: Authenticate to GCP using Workload Identity Federation
+      - name: Authenticate to GCP
         uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: "projects/123456789012/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
           service_account: "gha-sa-tf@nitesh-gcp-444718.iam.gserviceaccount.com"
 
-      # Step 3: Setup Terraform CLI
+      # Step 3: Set up Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.7
+          terraform_version: 1.6.0
 
-      # Step 4: Initialize Terraform
+      # Step 4: Terraform Init
       - name: Terraform Init
         run: terraform init
 
-      # Step 5: Terraform  Plan
+      # Step 5: Terraform Plan
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
-      # Step 6: Terraform Apply
-      - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan
+        run: terraform plan -var-file="terraform.tfvars"
