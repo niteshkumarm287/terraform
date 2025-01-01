@@ -26,7 +26,7 @@ jobs:
           service_account: "gha-tf@nitesh-gcp-444718.iam.gserviceaccount.com"
 
       # Step 3: Set up Terraform
-      - name: Setup Terraform
+      - name: Setup Terraform 
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.0
