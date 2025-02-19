@@ -1,0 +1,33 @@
+edit_synthetics_api_test(public_id, body)
+
+
+def create_or_update_synthetic(configuration: Configuration, data: Dict[str, Any]) -> Dict[str, Any]:
+    """Creates a new synthetic monitor or updates an existing one."""
+    with ApiClient(configuration) as api_client:
+        api_instance = synthetics_api.SyntheticsApi(api_client)
+        synthetic_name = data["name"]
+        existing_synthetic_id = get_existing_synthetic_id(configuration, synthetic_name)
+
+        if existing_synthetic_id:
+            # Update existing synthetic monitor
+            logging.debug(f"Updating synthetic monitor: {synthetic_name} (ID: {existing_synthetic_id})")
+            try:
+                response = api_instance.edit_synthetics_api_test(public_id=existing_synthetic_id, body=SyntheticsAPITest(**data))
+                logging.debug(f"Synthetic updated successfully, ID: {existing_synthetic_id}")
+                return response.to_dict()
+            except Exception as e:
+                logging.error(f"Error updating synthetic monitor: {e}")
+        else:
+            # Create new synthetic monitor
+            logging.debug(f"Creating new synthetic monitor: {synthetic_name}")
+            try:
+                synthetic_data = SyntheticsAPITest(**data)
+                response = api_instance.create_synthetics_api_test(body=synthetic_data)
+                logging.debug(
+                    f"Synthetic created successfully, ID: {response['public_id']}, URL: {get_synthetic_url(response['public_id'])}"
+                )
+                return response.to_dict()
+            except Exception as e:
+                logging.error(f"Error creating synthetic monitor: {e}")
+
+    return None
